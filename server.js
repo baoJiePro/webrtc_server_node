@@ -8,7 +8,7 @@ const port = process.env.PORT || 7000;
 const hostname = "0.0.0.0";
 const https_port = 7001
 
-app.use(express.static(path.join(__dirname, 'public')), null);
+app.use(express.static('./public'));
 
 
 http_server.listen(port, hostname, function () {
