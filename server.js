@@ -6,6 +6,7 @@ const fs = require('fs')
 const path = require("path");
 const port = process.env.PORT || 9000;
 const hostname = "0.0.0.0";
+const https_port = 9001
 
 app.use(express.static(path.join(__dirname, 'public')), null);
 
@@ -22,8 +23,8 @@ const options = {
 const https_server = https.createServer(options, app)
 const SkyRTC = require('./public/dist/js/SkyRTC.js').listen(http_server);
 // const SkyRTC = require('./public/dist/js/SkyRTC.js').listen(https_server);
-https_server.listen(9001, hostname, function(){
-    console.log(`Server running at https://${hostname}:9001/`);
+https_server.listen(https_port, hostname, function(){
+    console.log(`Server running at https://${hostname}:${port}/`);
 })
 
 app.get('/', function (req, res) {
