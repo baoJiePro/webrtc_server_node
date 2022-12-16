@@ -4,9 +4,9 @@ const http_server = require('http').createServer(app);
 const https = require('https')
 const fs = require('fs')
 const path = require("path");
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 7000;
 const hostname = "0.0.0.0";
-const https_port = 9001
+const https_port = 7001
 
 app.use(express.static(path.join(__dirname, 'public')), null);
 
