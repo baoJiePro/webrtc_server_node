@@ -1,18 +1,30 @@
 const express = require('express');
 const app = express();
-const server = require('http').createServer(app);
+const http_server = require('http').createServer(app);
+const https = require('https')
+const fs = require('fs')
 const path = require("path");
-const SkyRTC = require('./public/dist/js/SkyRTC.js').listen(server);
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 9000;
 const hostname = "0.0.0.0";
 
 app.use(express.static(path.join(__dirname, 'public')), null);
 
 
-server.listen(port, hostname, function () {
+http_server.listen(port, hostname, function () {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
 
+const options = {
+    key: fs.readFileSync('./cert/8365327_www.baortc.cn.key'),
+    cert: fs.readFileSync('./cert/8365327_www.baortc.cn.pem')
+}
+
+const https_server = https.createServer(options, app)
+const SkyRTC = require('./public/dist/js/SkyRTC.js').listen(http_server);
+// const SkyRTC = require('./public/dist/js/SkyRTC.js').listen(https_server);
+https_server.listen(9001, hostname, function(){
+    console.log(`Server running at https://${hostname}:9001/`);
+})
 
 app.get('/', function (req, res) {
     res.sendfile(__dirname + '/index.html');
